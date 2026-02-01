@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'package:microproyecto_si/Card.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -7,15 +9,25 @@ class GameScreen extends StatefulWidget {
   State<GameScreen> createState() => _GameScreenState();
 }
 
+List<Widget> generateBoard() {
+  List<Widget> a = List.generate(36, (index) {
+    int id = index % 18;
+    return CardWidget(id, 'image/${(index % 16) + 1}.png');
+  });
+  a.shuffle(Random());
+  return a;
+}
+
 class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(
-          'Game Screen',
-          style: TextStyle(fontSize: 30),
-        ),
+      appBar: AppBar(title: Text('Game Screen')),
+      body: GridView.count(
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 2,
+        crossAxisCount: 6,
+        children: generateBoard(),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:microproyecto_si/GameScreen.dart';
-import 'package:microproyecto_si/Leaderboard.dart';
+import 'package:microproyecto_si/gamescreen.dart';
+import 'package:microproyecto_si/leaderboard.dart';
 
 void main() {
   runApp(const MyApp());
