@@ -37,6 +37,7 @@ bool checkWin(List<Widget> board) {
     clockKey.currentState?.start();
     Global.playTime = clockKey.currentState!.time;
     Global.durationString = clockKey.currentState!.timeToString();
+    Global.saveData();
   }
   return win;
 }
