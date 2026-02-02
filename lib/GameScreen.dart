@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:microproyecto_si/cardWidget.dart';
 import 'package:microproyecto_si/clock.dart';
+import 'package:microproyecto_si/global.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -20,7 +21,7 @@ List<Widget> generateBoard() {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('¡Has ganado!'),
-              content: Text('¡Felicidades, has emparejado todas las cartas!'),
+              content: Text('¡Felicidades, tu tiempo fue de: ${Global.durationString}!'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -40,7 +41,8 @@ List<Widget> generateBoard() {
 }
 
 List<Widget> board = generateBoard();
-Clock clock = Clock();
+GlobalKey<ClockState> clockKey = GlobalKey<ClockState>();
+Clock clock = Clock(key: clockKey);
 
 bool checkWin(List<Widget> board) {
   bool win = true;
@@ -51,6 +53,11 @@ bool checkWin(List<Widget> board) {
         break;
       }
     }
+  }
+  if (win) {
+    clockKey.currentState?.start();
+    Global.playTime = clockKey.currentState!.time;
+    Global.durationString = clockKey.currentState!.timeToString();
   }
   return win;
 }

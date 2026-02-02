@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 class Clock extends StatefulWidget {
   const Clock({super.key});
 
+
   @override
-  State<Clock> createState() => _ClockState();
+  State<Clock> createState() => ClockState();
 }
 
-class _ClockState extends State<Clock> {
+class ClockState extends State<Clock> {
   final Stopwatch stopwatch = Stopwatch();
   late Duration time;
   late String timeString;
@@ -46,7 +47,12 @@ class _ClockState extends State<Clock> {
   }
 
   void start() {
+    if (!stopwatch.isRunning) {
     stopwatch.start();
+    } else{
+      stopwatch.stop();
+      timer?.cancel();
+    }
   }
 
   @override
