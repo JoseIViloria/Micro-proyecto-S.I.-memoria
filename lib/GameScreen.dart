@@ -11,36 +11,15 @@ class GameScreen extends StatefulWidget {
   State<GameScreen> createState() => _GameScreenState();
 }
 
-List<Widget> generateBoard() {
+List<Widget> generateBoard(Function(BuildContext) onTap) {
   List<Widget> a = List.generate(36, (index) {
     int id = (index % 18) + 1;
-    return CardWidget(id, 'image/$id.png', (BuildContext context) {
-      if (checkWin(board)) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('¡Has ganado!'),
-              content: Text('¡Felicidades, tu tiempo fue de: ${Global.durationString}!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    });
+    return CardWidget(id, 'image/$id.png', onTap);
   });
   a.shuffle(Random());
   return a;
 }
 
-List<Widget> board = generateBoard();
 GlobalKey<ClockState> clockKey = GlobalKey<ClockState>();
 Clock clock = Clock(key: clockKey);
 
@@ -63,6 +42,34 @@ bool checkWin(List<Widget> board) {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  late List<Widget> board;
+
+  @override
+  void initState() {
+    super.initState();
+    board = generateBoard((BuildContext context) {
+      if (checkWin(board)) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('¡Has ganado!'),
+              content: Text('¡Felicidades, tu tiempo fue de: ${Global.durationString}!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
