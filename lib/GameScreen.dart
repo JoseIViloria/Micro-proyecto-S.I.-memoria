@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:microproyecto_si/cardWidget.dart';
+import 'package:microproyecto_si/clock.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -11,7 +12,7 @@ class GameScreen extends StatefulWidget {
 
 List<Widget> generateBoard() {
   List<Widget> a = List.generate(36, (index) {
-    int id = (index%18)+1;
+    int id = (index % 18) + 1;
     return CardWidget(id, 'image/$id.png', (BuildContext context) {
       if (checkWin(board)) {
         showDialog(
@@ -39,6 +40,7 @@ List<Widget> generateBoard() {
 }
 
 List<Widget> board = generateBoard();
+Clock clock = Clock();
 
 bool checkWin(List<Widget> board) {
   bool win = true;
@@ -58,14 +60,20 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Game Screen')),
-      body: Center(
-        child: GridView.count(
-          shrinkWrap: true,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 2,
-          crossAxisCount: 6,
-          children: board,
-        ),
+      body: Column(
+        spacing: 40,
+        children: [
+          Align(alignment: AlignmentGeometry.topCenter, child: clock),
+          Center(
+            child: GridView.count(
+              shrinkWrap: true,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 2,
+              crossAxisCount: 6,
+              children: board,
+            ),
+          ),
+        ],
       ),
     );
   }
