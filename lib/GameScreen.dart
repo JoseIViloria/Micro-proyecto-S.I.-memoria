@@ -44,7 +44,7 @@ bool checkWin(List<Widget> board) {
   bool win = true;
   for (var card in board) {
     if (card is CardWidget) {
-      if (!card.emparejado) {
+      if (!card.paired) {
         win = false;
         break;
       }

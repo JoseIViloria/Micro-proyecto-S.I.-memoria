@@ -7,7 +7,7 @@ class CardWidget extends StatefulWidget {
   final int id;
   final String imagePath;
   final Function(BuildContext) onClick;
-  bool emparejado = false;
+  bool paired = false;
 
   CardWidget(this.id, this.imagePath, this.onClick, {super.key});
 
@@ -22,7 +22,7 @@ class CardWidgetState extends State<CardWidget> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: visible ? null : () {
-        if (!widget.emparejado) {
+        if (!widget.paired && Global.clicks < 2) {
           setState(() {
             visible = !visible;
             if (Global.clicks == 0) {
@@ -35,9 +35,9 @@ class CardWidgetState extends State<CardWidget> {
               Global.clicks = 2;
             }
             if(Global.firstCardSelected?.id == Global.secondCardSelected?.id){
-              widget.emparejado = true;
-              Global.firstCardSelected?.emparejado = true;
-              Global.secondCardSelected?.emparejado = true;
+              widget.paired = true;
+              Global.firstCardSelected?.paired = true;
+              Global.secondCardSelected?.paired = true;
               widget.onClick(context);
               Global.clicks = 0;
             }
