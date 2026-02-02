@@ -6,7 +6,7 @@ import 'package:microproyecto_si/global.dart';
 class CardWidget extends StatefulWidget {
   final int id;
   final String imagePath;
-  final VoidCallback onClick;
+  final Function(BuildContext) onClick;
   bool emparejado = false;
 
   CardWidget(this.id, this.imagePath, this.onClick, {super.key});
@@ -38,7 +38,7 @@ class CardWidgetState extends State<CardWidget> {
               widget.emparejado = true;
               Global.firstCardSelected?.emparejado = true;
               Global.secondCardSelected?.emparejado = true;
-              widget.onClick();
+              widget.onClick(context);
               Global.clicks = 0;
             }
             else if(Global.clicks == 2){

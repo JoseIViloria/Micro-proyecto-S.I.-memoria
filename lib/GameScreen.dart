@@ -12,7 +12,27 @@ class GameScreen extends StatefulWidget {
 List<Widget> generateBoard() {
   List<Widget> a = List.generate(36, (index) {
     int id = (index%18)+1;
-    return CardWidget(id, 'image/$id.png', () => checkBoard(board));
+    return CardWidget(id, 'image/$id.png', (BuildContext context) {
+      if (checkWin(board)) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('¡Has ganado!'),
+              content: Text('¡Felicidades, has emparejado todas las cartas!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
   });
   a.shuffle(Random());
   return a;
@@ -20,16 +40,17 @@ List<Widget> generateBoard() {
 
 List<Widget> board = generateBoard();
 
-void checkBoard(List<Widget> board) {
+bool checkWin(List<Widget> board) {
   bool win = true;
-  for (var x in board){
-    if (x is CardWidget && x.emparejado == false){
-      win = false;
-      break;}
+  for (var card in board) {
+    if (card is CardWidget) {
+      if (!card.emparejado) {
+        win = false;
+        break;
+      }
+    }
   }
-  if (win){
-    print('ok');
-  }
+  return win;
 }
 
 class _GameScreenState extends State<GameScreen> {
