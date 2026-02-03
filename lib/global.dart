@@ -12,9 +12,12 @@ class Global {
   static CardWidgetState? secondCardState;
 
   static Future<void> saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('bestTime', playTime.inMilliseconds);
-    await prefs.setString('bestTimeString', durationString);
+    final currentBest = await loadBestTime();
+    if (currentBest == 0 || playTime.inMilliseconds < currentBest) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('bestTime', playTime.inMilliseconds);
+      await prefs.setString('bestTimeString', durationString);
+    }
   }
 
   static Future<int> loadBestTime() async {
@@ -27,5 +30,10 @@ class Global {
     final prefs = await SharedPreferences.getInstance();
     String? bestTimeString = prefs.getString('bestTimeString');
     return bestTimeString ?? 'No existe';
+  }
+
+  static void deleteData() async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

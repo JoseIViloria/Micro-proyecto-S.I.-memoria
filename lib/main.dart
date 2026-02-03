@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'Pantalla_Home.dart'; 
 
-import 'package:microproyecto_si/gamescreen.dart';
-import 'package:microproyecto_si/leaderboard.dart';
 
 
 void main() {
