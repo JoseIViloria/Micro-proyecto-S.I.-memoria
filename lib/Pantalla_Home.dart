@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'GameScreen.dart';    // Importamos la pantalla del juego
 import 'Leaderboard.dart';   // Importamos la pantalla de récords
 
+
+/// Pantalla de bienvenida (Menú Principal).
 class PantallaInicio extends StatelessWidget {
   const PantallaInicio({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // --- FONDO DEGRADADO ---
+      // Fondo con degradado
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -25,7 +27,7 @@ class PantallaInicio extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center, // Centrar todo verticalmente
             children: [
               
-              // --- LOGO SUPERIOR ---
+              // Logo Superior 
               const Icon(
                 Icons.extension, // Icono de rompecabezas
                 size: 200,
@@ -34,7 +36,7 @@ class PantallaInicio extends StatelessWidget {
               
               const SizedBox(height: 20), // Espacio vacío
 
-              // --- TÍTULO DEL JUEGO ---
+              // Título del juego
               const Text(
                 'MEMORY-KIDS',
                 style: TextStyle(
@@ -64,7 +66,7 @@ class PantallaInicio extends StatelessWidget {
               
               const SizedBox(height: 60), // Espacio entre los botones
 
-              // --- BOTÓN 1: JUGAR ---
+              // Botón 1 (Jugar)
               BotonMenu(
                 texto: "JUGAR",
                 icono: Icons.play_arrow_rounded,
@@ -81,7 +83,7 @@ class PantallaInicio extends StatelessWidget {
 
               const SizedBox(height: 20), // Espacio entre botones
 
-              // --- BOTÓN 2 RÉCORDS ---
+              // Botón 2 (Récords)
               BotonMenu(
                 texto: "RÉCORDS",
                 icono: Icons.emoji_events_rounded,
@@ -103,7 +105,7 @@ class PantallaInicio extends StatelessWidget {
   }
 }
 
-// --- WIDGET PERSONALIZADO PARA LOS BOTONES ---
+// Widget personalizado para los botones
 class BotonMenu extends StatelessWidget {
   final String texto;
   final IconData icono;

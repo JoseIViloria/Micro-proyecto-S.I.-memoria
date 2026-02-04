@@ -32,7 +32,7 @@ class Global {
     return bestTimeString ?? 'No existe';
   }
 
-  static void deleteData() async{
+  static Future<void> deleteData() async{
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }

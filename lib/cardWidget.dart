@@ -71,7 +71,7 @@ class CardWidgetState extends State<CardWidget> {
           : SizedBox.expand(
               child: Container(
                 color: Colors.blue,
-                child: Text(widget.id.toString()),
+                //child: Text(widget.id.toString()),
               ),
             ),
     );

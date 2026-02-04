@@ -4,6 +4,10 @@ import 'package:microproyecto_si/cardWidget.dart';
 import 'package:microproyecto_si/clock.dart';
 import 'package:microproyecto_si/global.dart';
 
+
+/// Clase principal de la pantalla del juego.
+/// Su trabajo es contener y mostrar los elementos visuales necesarios para jugar,
+/// como el tablero de cartas y el temporizador.
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
 
@@ -11,6 +15,10 @@ class GameScreen extends StatefulWidget {
   State<GameScreen> createState() => _GameScreenState();
 }
 
+
+/// Función encargada de preparar las cartas.
+/// Crea las 36 cartas necesarias, asegura que cada una tenga su pareja idéntica
+/// y las baraja al azar para que cada partida sea diferente.
 List<Widget> generateBoard(Function(BuildContext) onTap) {
   List<Widget> a = List.generate(36, (index) {
     int id = (index % 18) + 1;
@@ -23,6 +31,8 @@ List<Widget> generateBoard(Function(BuildContext) onTap) {
 GlobalKey<ClockState> clockKey = GlobalKey<ClockState>();
 Clock clock = Clock(key: clockKey);
 
+/// Esta función revisa constantemente si todas las cartas del tablero ya tienen pareja;
+/// si todas están emparejadas, detiene el reloj y guarda el récord.
 bool checkWin(List<Widget> board) {
   bool win = true;
   for (var card in board) {
@@ -42,6 +52,10 @@ bool checkWin(List<Widget> board) {
   return win;
 }
 
+
+/// Clase que contiene el diseño de la pantalla.
+/// Controla cómo se ve todo (colores, diseño), actualiza lo que pasa en el juego
+/// y muestra la mini ventana de victoria.
 class _GameScreenState extends State<GameScreen> {
   late List<Widget> board;
 
@@ -50,25 +64,72 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     board = generateBoard((BuildContext context) {
       if (checkWin(board)) {
-        showDialog(
+                showDialog(
           context: context,
+          barrierDismissible: false, // Evita que se cierre si se toca fuera del recuadro
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('¡Has ganado!'),
-              content: Text('¡Felicidades, tu tiempo fue de: ${Global.durationString}!'),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20), // Bordes redondeados bonitos
+              ),
+              title: const Column(
+                children: [
+                  Text('🏆', style: TextStyle(fontSize: 60)), // Trofeo Gigante
+                  SizedBox(height: 10),
+                  Text(
+                    '¡Felicidades!',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                ],
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min, // Se ajusta al tamaño del contenido
+                children: [
+                  const Text(
+                    'Tu tiempo ha sido:',
+                    style: TextStyle(fontSize: 18, color: Colors.black54),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    Global.durationString,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.indigo, // 
+                      fontFamily: 'Serif', // Fuente del texto
+                    ),
+                  ),
+                ],
+              ),
               actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('OK'),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orangeAccent, // Color del botón
+                      foregroundColor: Colors.white, // Color del texto
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context); // Cierra el diálogo (la alerta)
+                      Navigator.pop(context); // Cierra el juego y vuelve al Home
+                    },
+                    child: const Text(
+                      'Volver al menú',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
+                const SizedBox(height: 10),
               ],
             );
           },
         );
       }
     });
+
   }
 
   @override
