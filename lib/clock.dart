@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
+//Clase para poder mostrar y registrar el tiempo de una partida
 class Clock extends StatefulWidget {
   const Clock({super.key});
 
@@ -16,6 +16,7 @@ class ClockState extends State<Clock> {
   late String timeString;
   late Timer? timer;
 
+//Generación de un nuevo estado del reloj.
   @override
   void initState() {
     super.initState();
@@ -28,6 +29,7 @@ class ClockState extends State<Clock> {
     start();
   }
 
+//método que muestra el tiempo actual como un String
   String timeToString() {
     final int minutes = stopwatch.elapsed.inMinutes;
     final int seconds = stopwatch.elapsed.inSeconds % 60;
@@ -36,16 +38,19 @@ class ClockState extends State<Clock> {
         '${minutes.toString()}:${seconds.toString()}:${milliseconds.toString()}';
   }
 
+//método para actualizar el tiempo
   void updateTime() {
     timeString = timeToString();
     time = stopwatch.elapsed;
   }
 
+//Resetea el reloj
   void reset() {
     stopwatch.reset();
     updateTime();
   }
 
+//Inicia el reloj. Lo detiene si el temporizador ya comenzó
   void start() {
     if (!stopwatch.isRunning) {
     stopwatch.start();
@@ -54,7 +59,8 @@ class ClockState extends State<Clock> {
       timer?.cancel();
     }
   }
-
+  
+//Borra el widget
   @override
   void dispose() {
     timer?.cancel();

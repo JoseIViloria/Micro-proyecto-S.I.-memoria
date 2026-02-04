@@ -3,6 +3,7 @@ import 'package:microproyecto_si/global.dart';
 
 // ignore_for_file: must_be_immutable
 
+//Clase para las "cartas del juego"
 class CardWidget extends StatefulWidget {
   final int id;
   final String imagePath;
@@ -24,6 +25,7 @@ class CardWidgetState extends State<CardWidget> {
       onPressed: visible
           ? null
           : () {
+            //Lógica de emparejamiento de las cartas.
               if (!widget.paired && Global.clicks < 2) {
                 setState(() {
                   visible = !visible;
@@ -66,12 +68,14 @@ class CardWidgetState extends State<CardWidget> {
         padding: EdgeInsets.zero,
         minimumSize: Size(20, 60),
       ),
+
+      //Lógica para mostrar o no la imágen correspondiente
       child: visible
           ? Image.asset(widget.imagePath)
           : SizedBox.expand(
               child: Container(
                 color: Colors.blue,
-                //child: Text(widget.id.toString()),
+                //child: Text(widget.id.toString()), (opción de debug, muestra el id de la carta como texto)
               ),
             ),
     );

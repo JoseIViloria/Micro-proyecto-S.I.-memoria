@@ -1,7 +1,7 @@
 import 'cardWidget.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-
+// Clase para guardar variables globales. (información que necesita ser accesible para varias pantallas distintas)
 class Global {
   static int clicks = 0;
   static Duration playTime = Duration.zero;
@@ -11,6 +11,7 @@ class Global {
   static CardWidgetState? firstCardState;
   static CardWidgetState? secondCardState;
 
+//Guardar datos del mejor tiempo
   static Future<void> saveData() async {
     final currentBest = await loadBestTime();
     if (currentBest == 0 || playTime.inMilliseconds < currentBest) {
@@ -20,18 +21,21 @@ class Global {
     }
   }
 
+//Carga el mejor tiempo
   static Future<int> loadBestTime() async {
     final prefs = await SharedPreferences.getInstance();
     int? bestTime = prefs.getInt('bestTime');
     return bestTime ?? 0;
   }
 
+//Carga un String que representa el mejor tiempo
   static Future<String> loadBestTimeString() async {
     final prefs = await SharedPreferences.getInstance();
     String? bestTimeString = prefs.getString('bestTimeString');
     return bestTimeString ?? 'No existe';
   }
 
+//Borra todos los datos del mejor tiempo almacenados localmente
   static Future<void> deleteData() async{
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();

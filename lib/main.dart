@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'Pantalla_Home.dart'; 
 
 
-
+//Main del proyecto. Manda a la pantalla de inicio
 void main() {
   runApp(const MyApp());
 }
